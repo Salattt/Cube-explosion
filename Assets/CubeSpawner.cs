@@ -6,7 +6,7 @@ public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] private List<Cube> _startCubes;
 
-    [SerializeField] private GameObject _cube;
+    [SerializeField] private Cube _cube;
     [SerializeField] private uint _minCubesSpawn;
     [SerializeField] private uint _maxCubesSpawn;
     [SerializeField] private float _spawnInaccuray;
@@ -28,8 +28,6 @@ public class CubeSpawner : MonoBehaviour
         {
             SpawnCube(cube);
         }
-
-        cube.Destroy();
     }
 
     private void SpawnCube(Cube cube)

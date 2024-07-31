@@ -23,11 +23,6 @@ public class Cube : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
-
     public void Construct(float scale, float spawnChance)
     {
         Transform.localScale = new Vector3(scale, scale, scale);
@@ -39,5 +34,7 @@ public class Cube : MonoBehaviour
     private void OnMouseDown()
     {
         CubeExplode.Invoke(this);
+
+        Destroy(gameObject);
     }
 }
