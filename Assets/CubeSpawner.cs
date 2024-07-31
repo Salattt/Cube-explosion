@@ -6,11 +6,13 @@ public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] private List<Cube> _startCubes;
 
-    [SerializeField] private Cube _cube;
+    [SerializeField] private Cube _prefab;
     [SerializeField] private uint _minCubesSpawn;
     [SerializeField] private uint _maxCubesSpawn;
     [SerializeField] private float _spawnInaccuray;
     [SerializeField] private float _explosionForce;
+    [SerializeField] private float _spawnedCubeScaleDivider;
+    [SerializeField] private float _spawnedCubeSpawnChanceDivider;
 
     public void OnEnable()
     {
@@ -36,11 +38,11 @@ public class CubeSpawner : MonoBehaviour
 
         for(int i = 0; i <= Random.Range(_minCubesSpawn, _maxCubesSpawn +1); i++)
         {
-            spawnedCube = Instantiate(_cube, new Vector3(cube.Transform.position.x + Random.Range(-_spawnInaccuray, _spawnInaccuray), 
-                cube.Transform.position.y + Random.Range(-_spawnInaccuray, _spawnInaccuray), cube.Transform.position.z + Random.Range(-_spawnInaccuray, _spawnInaccuray)), cube.Transform.rotation).GetComponent<Cube>();
+            spawnedCube = Instantiate(_prefab, new Vector3(cube.Transform.position.x + Random.Range(-_spawnInaccuray, _spawnInaccuray), 
+                cube.Transform.position.y + Random.Range(-_spawnInaccuray, _spawnInaccuray), cube.Transform.position.z + Random.Range(-_spawnInaccuray, _spawnInaccuray)), cube.Transform.rotation);
 
             spawnedCube.CubeExplode += OnCubeExplode;
-            spawnedCube.Construct(cube.Scale / 2, cube.SpawnChance / 2);
+            spawnedCube.Construct(cube.Scale / _spawnedCubeScaleDivider, cube.SpawnChance / _spawnedCubeSpawnChanceDivider);
             ApplyExplosionForce(cube, spawnedCube);
         }
     }
