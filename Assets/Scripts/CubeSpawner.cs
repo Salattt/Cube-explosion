@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
@@ -18,31 +17,32 @@ public class CubeSpawner : MonoBehaviour
     {
         foreach(Cube cube in _startCubes)
         {
-            cube.CubeExplode += OnCubeExplode;
+            cube.Explode += OnCubeExploded;
         }
     }
 
-    private void OnCubeExplode(Cube cube)
+    private void OnCubeExploded(Cube cube)
     {
-        cube.CubeExplode -= OnCubeExplode;
+        cube.Explode -= OnCubeExploded;
 
         if(cube.SpawnChance > Random.Range(0, 100))
         {
-            SpawnCube(cube);
+            SpawnCubes(cube);
         }
     }
 
-    private void SpawnCube(Cube cube)
+    private void SpawnCubes(Cube cube)
     {
         Cube spawnedCube;
+        int spawnedCubesCount = (int)Random.Range(_minCubesSpawn, _maxCubesSpawn + 1);
 
-        for(int i = 0; i <= Random.Range(_minCubesSpawn, _maxCubesSpawn +1); i++)
+        for(int i = 0; i <= spawnedCubesCount; i++)
         {
             spawnedCube = Instantiate(_prefab, new Vector3(cube.Transform.position.x + Random.Range(-_spawnInaccuray, _spawnInaccuray), 
                 cube.Transform.position.y + Random.Range(-_spawnInaccuray, _spawnInaccuray), cube.Transform.position.z + Random.Range(-_spawnInaccuray, _spawnInaccuray)), cube.Transform.rotation);
 
-            spawnedCube.CubeExplode += OnCubeExplode;
-            spawnedCube.Construct(cube.Scale / _spawnedCubeScaleDivider, cube.SpawnChance / _spawnedCubeSpawnChanceDivider);
+            spawnedCube.Explode += OnCubeExploded;
+            spawnedCube.Init(cube.Scale / _spawnedCubeScaleDivider, cube.SpawnChance / _spawnedCubeSpawnChanceDivider);
             ApplyExplosionForce(cube, spawnedCube);
         }
     }

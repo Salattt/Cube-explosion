@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class Cube : MonoBehaviour
 {
-    public event Action<Cube> CubeExplode;
+    public event Action<Cube> Explode;
 
     public Transform Transform { get; private set; }
     public Rigidbody Rigidbody { get; private set; }
@@ -21,7 +21,7 @@ public class Cube : MonoBehaviour
         Scale = transform.localScale.x;
     }
 
-    public void Construct(float scale, float spawnChance)
+    public void Init(float scale, float spawnChance)
     {
         Transform.localScale = new Vector3(scale, scale, scale);
         Scale = scale;
@@ -31,7 +31,7 @@ public class Cube : MonoBehaviour
 
     private void OnMouseDown()
     {
-        CubeExplode.Invoke(this);
+        Explode.Invoke(this);
 
         Destroy(gameObject);
     }

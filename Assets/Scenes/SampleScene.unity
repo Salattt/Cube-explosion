@@ -495,11 +495,13 @@ MonoBehaviour:
   _startCubes:
   - {fileID: 1324084917}
   - {fileID: 2102181545}
-  _cube: {fileID: 3328676612963365237, guid: 880272fb087326b4ebb47e2f3dcfd916, type: 3}
+  _prefab: {fileID: 3328676612963365237, guid: 880272fb087326b4ebb47e2f3dcfd916, type: 3}
   _minCubesSpawn: 2
   _maxCubesSpawn: 6
   _spawnInaccuray: 0.05
   _explosionForce: 0.5
+  _spawnedCubeScaleDivider: 2
+  _spawnedCubeSpawnChanceDivider: 2
 --- !u!4 &805041798
 Transform:
   m_ObjectHideFlags: 0
