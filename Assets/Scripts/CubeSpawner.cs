@@ -29,6 +29,10 @@ public class CubeSpawner : MonoBehaviour
         {
             SpawnCubes(cube);
         }
+        else
+        {
+            cube.CreateExplosion();
+        }
     }
 
     private void SpawnCubes(Cube cube)

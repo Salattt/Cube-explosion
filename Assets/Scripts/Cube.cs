@@ -3,10 +3,15 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent (typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshRenderer))]
 
 public class Cube : MonoBehaviour
 {
+    [SerializeField] private Explosion _explosion;
+    [SerializeField] private float _maxExplosionRadius;
+    [SerializeField] private float _maxExplosionForce;
+    [SerializeField] private float _biggestExplosionScale;
+
     public event Action<Cube> Explode;
 
     public Transform Transform { get; private set; }
@@ -29,10 +34,16 @@ public class Cube : MonoBehaviour
         GetComponent<MeshRenderer>().material.color = new Color(Random.Range(0,1f), Random.Range(0, 1f), Random.Range(0, 1f));
     }
 
+    public void CreateExplosion()
+    {
+        float scaleFactor = Mathf.Clamp01(_biggestExplosionScale / Scale);
+        _explosion.Explode(scaleFactor * _maxExplosionRadius, scaleFactor * _maxExplosionForce);
+    }
+
     private void OnMouseDown()
     {
         Explode.Invoke(this);
 
-        Destroy(gameObject);
+        Destroy(gameObject, Time.fixedDeltaTime);
     }
 }
